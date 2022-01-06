@@ -17,9 +17,8 @@ public class store
             {
                 Console.WriteLine("What would you like to do?");
                 Console.WriteLine("[1] Create new store");
-                Console.WriteLine("[2] See all stores");
-                Console.WriteLine("[3] Manage Inventory");
-                Console.WriteLine("[4] Go back");
+                Console.WriteLine("[2] Manage Inventory");
+                Console.WriteLine("[3] Go back");
                 string? managerInput = Console.ReadLine();
 
                 switch(managerInput)
@@ -42,21 +41,6 @@ public class store
                 break;
 
                 case "2":
-                foreach(Storefront store in AllStores.allStores)
-                {
-                    Console.WriteLine($"{store.Name}\n{store.Address}\n{store.City}\n{store.State}");
-                    // Console.WriteLine("length of item" + StoreInventory.Count() );
-                    StoreInventory = store.Inventories;
-                    foreach( Inventory inventory in StoreInventory )
-                    {
-                        Console.WriteLine($"Item: {inventory.Item.ProductName} Description: {inventory.Item.Description}");
-                        Console.WriteLine($"Price: {inventory.Item.Price} Quantity: {inventory.Quantity}");
-                    }
-                    Console.WriteLine("************************************");
-                }
-                break;
-
-                case "3":
                 Console.WriteLine("Select a Store:");
                 for(int i = 0;i < AllStores.allStores.Count;i++)
                 {
@@ -68,7 +52,7 @@ public class store
                 ManageInventory.manageInventory(selectedStorefront.Inventories);
                 break;
 
-                case "4":
+                case "3":
                 goBack = true;
                 break;
 
