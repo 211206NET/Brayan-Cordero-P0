@@ -6,6 +6,8 @@ using Models;
 public class ManagerMenu
 {
     List<Inventory> StoreInventory = new List<Inventory>();
+    DBREPO dbRepo = new DBREPO();
+    
     public void managerMenu()
     {
     
@@ -45,9 +47,11 @@ public class ManagerMenu
             break;
 
             case "3":
-            foreach(Customer customers in AllCustomers.allCustomers)
+
+            List<Customer> customers = dbRepo.AllCustomers();
+            foreach(Customer excistingCustomers in customers)
             {
-                Console.WriteLine($"Customer: {customers.UserName} Email: {customers.Email}");
+                Console.WriteLine($"Customer: {excistingCustomers.UserName} Email: {excistingCustomers.Email}");
                 Console.WriteLine("***************************");
             }
             break;

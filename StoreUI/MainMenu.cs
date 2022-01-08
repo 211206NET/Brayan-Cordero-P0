@@ -10,14 +10,16 @@ public class MainMenu
     store manageStores = new store();
     CustomerMenu customerSignIn = new CustomerMenu();
     ManagerMenu managerPortal = new ManagerMenu();
+    DBREPO dbRepo = new DBREPO();
+    List<Customer> customers = dbRepo.AllCustomers();
 
     //not permanent
-    Customer Manager = new Customer();
-    string managerUsername = "Manager";
-    string managerPassword = "999";
-    Manager.UserName = managerUsername;
-    Manager.Password = managerPassword;
-    AllCustomers.allCustomers.Add(Manager);
+    // Customer Manager = new Customer();
+    // string managerUsername = "Manager";
+    // string managerPassword = "999";
+    // Manager.UserName = managerUsername;
+    // Manager.Password = managerPassword;
+    // AllCustomers.allCustomers.Add(Manager);
     //only to exit
 
 
@@ -47,6 +49,7 @@ public class MainMenu
             case "1": 
                 
                 bool successfullLogin = false;
+                
                 while (!successfullLogin)
                 {
                     Console.WriteLine("Enter Username");
@@ -54,7 +57,7 @@ public class MainMenu
                     Console.WriteLine("Enter Password");
                     string? Password = Console.ReadLine();
                     
-                    foreach(Customer existing in AllCustomers.allCustomers)
+                    foreach(Customer existing in customers)
                     {
                         if(Username == existing.UserName && Password == existing.Password )
                         {
@@ -97,26 +100,26 @@ public class MainMenu
             break;
             
             case "4":
-                bool ManagerLogIn = false;
-                while (!ManagerLogIn)
-                {
-                    Console.WriteLine("Enter Username");
-                    string? Username = Console.ReadLine();
-                    Console.WriteLine("Enter Password");
-                    string? Password = Console.ReadLine();
-                    if(Username == Manager.UserName && Password == Manager.Password )
-                    {
-                        ManagerLogIn = true;
-                    }
+                // bool ManagerLogIn = false;
+                // while (!ManagerLogIn)
+                // {
+                //     Console.WriteLine("Enter Username");
+                //     string? Username = Console.ReadLine();
+                //     Console.WriteLine("Enter Password");
+                //     string? Password = Console.ReadLine();
+                //     if(Username == Manager.UserName && Password == Manager.Password )
+                //     {
+                //         ManagerLogIn = true;
+                //     }
                     
-                    else if(!ManagerLogIn)
-                    {
-                        Console.WriteLine("Invalid Username or Password");
-                        Console.WriteLine("Please try again");
-                    }
+                //     else if(!ManagerLogIn)
+                //     {
+                //         Console.WriteLine("Invalid Username or Password");
+                //         Console.WriteLine("Please try again");
+                //     }
                 
-                }
-                managerPortal.managerMenu();
+                // }
+                // managerPortal.managerMenu();
             break;
             default:
                 Console.WriteLine("Invalid input, try again");
