@@ -14,12 +14,12 @@ public class MainMenu
     List<Customer> customers = dbRepo.AllCustomers();
 
     //not permanent
-    // Customer Manager = new Customer();
-    // string managerUsername = "Manager";
-    // string managerPassword = "999";
-    // Manager.UserName = managerUsername;
-    // Manager.Password = managerPassword;
-    // AllCustomers.allCustomers.Add(Manager);
+    Customer Manager = new Customer();
+    string managerUsername = "Manager";
+    string managerPassword = "999";
+    Manager.UserName = managerUsername;
+    Manager.Password = managerPassword;
+    AllCustomers.allCustomers.Add(Manager);
     //only to exit
 
 
@@ -50,16 +50,16 @@ public class MainMenu
                 
                 bool successfullLogin = false;
                 
-                while (!successfullLogin)
-                {
+                // while (!successfullLogin)
+                // {
                     Console.WriteLine("Enter Username");
-                    string? Username = Console.ReadLine();
+                    string? CustomerUsername = Console.ReadLine();
                     Console.WriteLine("Enter Password");
-                    string? Password = Console.ReadLine();
+                    string? CustomerPassword = Console.ReadLine();
                     
                     foreach(Customer existing in customers)
                     {
-                        if(Username == existing.UserName && Password == existing.Password )
+                        if(CustomerUsername == existing.UserName && CustomerPassword == existing.Password )
                         {
                             customerSignIn.customerMenu(existing);
                             successfullLogin = true;
@@ -71,7 +71,7 @@ public class MainMenu
                         Console.WriteLine("Please try again");
                     }
                 
-                }
+                // }
                 
                 
             break;
@@ -87,12 +87,10 @@ public class MainMenu
                 newCustomer.UserName = username;
                 newCustomer.Password = password;
                 newCustomer.Email = email;
-                AllCustomers.allCustomers.Add(newCustomer);
+                dbRepo.AddCustomer(newCustomer);
+                
                 Console.WriteLine("your account has been created");
-                // foreach(Customer account in AllCustomers.allCustomers)
-                // {
-                //     Console.WriteLine($"{account.UserName} {account.Password} {account.Email}");
-                // }
+                
             break;
 
             case "3":
@@ -100,23 +98,25 @@ public class MainMenu
             break;
             
             case "4":
-                // bool ManagerLogIn = false;
+                bool ManagerLogIn = false;
                 // while (!ManagerLogIn)
                 // {
-                //     Console.WriteLine("Enter Username");
-                //     string? Username = Console.ReadLine();
-                //     Console.WriteLine("Enter Password");
-                //     string? Password = Console.ReadLine();
-                //     if(Username == Manager.UserName && Password == Manager.Password )
-                //     {
-                //         ManagerLogIn = true;
-                //     }
+                    Console.WriteLine("Enter Username");
+                    string? Username = Console.ReadLine();
+                    Console.WriteLine("Enter Password");
+                    string? Password = Console.ReadLine();
+                    if(Username == Manager.UserName && Password == Manager.Password )
+                    {
+                        managerPortal.managerMenu();
+                        ManagerLogIn = true;
+                    }
                     
-                //     else if(!ManagerLogIn)
-                //     {
-                //         Console.WriteLine("Invalid Username or Password");
-                //         Console.WriteLine("Please try again");
-                //     }
+                    else if(!ManagerLogIn)
+                    {
+                        Console.WriteLine("Invalid Username or Password");
+                        Console.WriteLine("Please try again");
+                        break;
+                    }
                 
                 // }
                 // managerPortal.managerMenu();
