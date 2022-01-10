@@ -23,16 +23,16 @@ public class MainMenu
     //only to exit
 
 
-    Storefront OriginalStore = new Storefront();
-    string Name = "Munchies";
-    OriginalStore.Name = Name;
-    string Address = "626 Rancho Ave";
-    OriginalStore.Address = Address;
-    string City = "San Bernanrdino";
-    OriginalStore.City = City;
-    string State = "CA";
-    OriginalStore.State = State;
-    AllStores.allStores.Add(OriginalStore);
+    // Storefront OriginalStore = new Storefront();
+    // string Name = "Munchies";
+    // OriginalStore.Name = Name;
+    // string Address = "626 Rancho Ave";
+    // OriginalStore.Address = Address;
+    // string City = "San Bernanrdino";
+    // OriginalStore.City = City;
+    // string State = "CA";
+    // OriginalStore.State = State;
+    // AllStores.allStores.Add(OriginalStore);
 
     bool exit = false;
 

@@ -6,7 +6,6 @@ using Models;
 public class ManagerMenu
 {
     List<Inventory> StoreInventory = new List<Inventory>();
-    DBREPO dbRepo = new DBREPO();
     
     public void managerMenu()
     {
@@ -27,27 +26,24 @@ public class ManagerMenu
         switch(input)
         {
             case "1":
-            manageStores.manageStores(AllStores.allStores);
+            DBREPO dbManagerStore = new DBREPO();
+            List<Storefront> manageStore = dbManagerStore.AllStores();
+            manageStores.manageStores(manageStore);
 
             break;
 
             case "2":
-            foreach(Storefront store in AllStores.allStores)
+            DBREPO dbRepoStores = new DBREPO();
+            List<Storefront> allstores = dbRepoStores.AllStores();
+            foreach(Storefront store in allstores)
                 {
                     Console.WriteLine($"{store.Name}\n{store.Address}\n{store.City}\n{store.State}");
-                    // Console.WriteLine("length of item" + StoreInventory.Count() );
-                    StoreInventory = store.Inventories;
-                    foreach( Inventory inventory in StoreInventory )
-                    {
-                        Console.WriteLine($"Item: {inventory.Item.ProductName} Description: {inventory.Item.Description}");
-                        Console.WriteLine($"Price: {inventory.Item.Price} Quantity: {inventory.Quantity}");
-                    }
                     Console.WriteLine("************************************");
                 }
             break;
 
             case "3":
-
+            DBREPO dbRepo = new DBREPO();
             List<Customer> customers = dbRepo.AllCustomers();
             foreach(Customer excistingCustomers in customers)
             {

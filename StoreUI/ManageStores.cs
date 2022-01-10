@@ -10,7 +10,8 @@ public class store
     
     public void manageStores(List<Storefront> IncomingStores)
     {
-        AllStores.allStores = IncomingStores;
+        // List<Storefront> incomingStores = IncomingStores;
+        // AllStores.allStores = IncomingStores;
         bool goBack = false;
 
             while(!goBack)
@@ -41,13 +42,16 @@ public class store
                 break;
 
                 case "2":
+                DBREPO dbRepoStores = new DBREPO();
+                List<Storefront> allstores = dbRepoStores.AllStores();
+
                 Console.WriteLine("Select a Store:");
-                for(int i = 0;i < AllStores.allStores.Count;i++)
+                for(int i = 0;i < allstores.Count;i++)
                 {
-                    Console.WriteLine($"[{i}] {AllStores.allStores[i].Name}\n{AllStores.allStores[i].Address}\n{AllStores.allStores[i].City}\n{AllStores.allStores[i].State}");
+                    Console.WriteLine($"[{i}] {allstores[i].Name}\n{allstores[i].Address}\n{allstores[i].City}\n{allstores[i].State}");
                 }
                 int selection = Int32.Parse(Console.ReadLine());
-                Storefront selectedStorefront = AllStores.allStores[selection];
+                Storefront selectedStorefront = allstores[selection];
                 
                 ManageInventory.manageInventory(selectedStorefront.Inventories);
                 break;

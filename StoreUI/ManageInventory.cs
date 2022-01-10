@@ -9,16 +9,16 @@ public class ManageInventory
         // if(IncomingInventory != null) {
         //     Inventories = IncomingInventory;
         // }
-        
+
         
         bool goback = false;
         while(!goback)
         {
         Console.WriteLine("What would you like to do?");
         Console.WriteLine("[1] Add Product");
-        Console.WriteLine("[2] Remove Product");
-        Console.WriteLine("[3] see All Products");
-        Console.WriteLine("[4] Go Back");
+        // Console.WriteLine("[2] Remove Product");
+        Console.WriteLine("[2] see All Products");
+        Console.WriteLine("[3] Go Back");
         string? input = Console.ReadLine();
 
             switch(input)
@@ -45,17 +45,26 @@ public class ManageInventory
                     
                     
                 break;
+                // case "2":
+                // Console.WriteLine("nothing yet");
+                // break;
                 case "2":
-                Console.WriteLine("nothing yet");
-                break;
-                case "3":
-                foreach (Inventory inventory in  IncomingInventory)
+                DBREPO dbStoreInventory = new DBREPO();
+                // Storefront selectedStore = new Storefront();
+                // selectedStore.ID;
+                List<Inventory> storeInventory = new List<Inventory>();
+                storeInventory= dbStoreInventory.StoreInventory();
+                // Product storeProduct = new Product();
+                foreach (Inventory inventory in storeInventory)
                 {
+                    // Console.WriteLine($"{inventory.Quantity}");
                     Console.WriteLine($"Item: {inventory.Item.ProductName} Description: {inventory.Item.Description}");
                     Console.WriteLine($"Price: {inventory.Item.Price} Quantity: {inventory.Quantity}");
+                    Console.WriteLine("************************");
+                    
                 }
                 break;
-                case "4":
+                case "3":
                 goback = true;
                 break;
                 default:
