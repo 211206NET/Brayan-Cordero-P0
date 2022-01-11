@@ -41,7 +41,7 @@ public class DBREPO
     }
 
     //List of Storefronts
-        public List<Storefront> AllStores()
+    public List<Storefront> AllStores()
     {
         List<Storefront> allStores = new List<Storefront>();
         using (SqlConnection connection = new SqlConnection(_connectionString))
@@ -70,8 +70,38 @@ public class DBREPO
         return allStores;
     }
 
+    //List of cutomer orders
+    public List<Order> AllOrders(Customer incomingCustomer)
+    {
+        List<Order> allOrders = new List<Order>();
+        using (SqlConnection connection = new SqlConnection(_connectionString))
+        {
+            connection.Open();
+            string queryTxt = $"SELECT Orders.ID, Orders.OrderDate, Storefront.Name, Customer.Username, Orders.TOTAL FROM Orders INNER JOIN Customer ON Orders.Customer_ID = Customer.ID INNER JOIN Storefront ON Orders.StoreFront_ID = Storefront.ID WHERE Customer_ID='{incomingCustomer.Id}'";
+            
+            using(SqlCommand cmd = new SqlCommand(queryTxt, connection))
+            {
+                using(SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while(reader.Read())
+                    {
+                        Order order = new Order();
+                        order.OrderNumber= reader.GetInt32(0);
+                        order.OrderDate= reader.GetString(1);
+                        order.StoreName= reader.GetString(2);
+                        order.Customer = reader.GetString(3);
+                        order.Total = reader.GetDecimal(4);
+                        allOrders.Add(order);
+                    }
+                }
+            } 
+            connection.Close();
+        }
+        return allOrders;
+    }
+
         //Inventory for stores
-        public List<Inventory> StoreInventory(Storefront IncomingStore)
+    public List<Inventory> StoreInventory(Storefront IncomingStore)
     {
         Storefront incomingStore = IncomingStore;
         List<Inventory> storeInventory = new List<Inventory>();
@@ -79,7 +109,7 @@ public class DBREPO
         {
             connection.Open();
             string queryTxt = $"SELECT Inventory.ID, Inventory.Quantity, Inventory.ID,Product.Name,Product.Description, Product.Price, StoreFront_ID FROM Inventory INNER JOIN Product ON Inventory.ProductID = Product.ID WHERE StoreFront_ID='{IncomingStore.ID}'";
-            // string queryTxt = $"SELECT FROM Inventory WHERE StoreFront_ID = '{incomingStore.ID}'";
+            
             
             using(SqlCommand cmd = new SqlCommand(queryTxt, connection))
             {
@@ -106,7 +136,8 @@ public class DBREPO
         return storeInventory;
     }
 
-        public List<Product> AllProducts()
+    //List of all products
+    public List<Product> AllProducts()
     {
         List<Product> allProduct = new List<Product>();
         using (SqlConnection connection = new SqlConnection(_connectionString))
@@ -164,7 +195,7 @@ public class DBREPO
     }
 
     // Add new products to storefront
-        public void AddProduct(Product productToAdd)
+    public void AddProduct(Product productToAdd)
     {
         DataSet customerSet = new DataSet();
         string selectCmd = "SELECT*FROM Product";
@@ -192,7 +223,7 @@ public class DBREPO
     }
 
     //Add to inventory
-        public void AddToInventory(Inventory inventoryToAdd)
+    public void AddToInventory(Inventory inventoryToAdd)
     {
         DataSet customerSet = new DataSet();
         string selectCmd = "SELECT*FROM Inventory";
@@ -215,6 +246,35 @@ public class DBREPO
                 dataAdapter.InsertCommand= new SqlCommand(insertCmd, connection);
                 
                 dataAdapter.Update(customerTable);
+            }
+        }
+    }
+
+    //add new order
+    public void AddToOrders(Customer incomingCustomer, Storefront selectedStore,Order incomingOrder)
+    {
+        DataSet orderSet = new DataSet();
+        string selectCmd = "SELECT*FROM Orders";
+        using(SqlConnection connection = new SqlConnection(_connectionString))
+        {
+            using(SqlDataAdapter dataAdapter = new SqlDataAdapter(selectCmd, connection))
+            {
+                
+                dataAdapter.Fill(orderSet, "Orders");
+
+                DataTable orderTable = orderSet.Tables["Orders"];
+                DataRow newRow = orderTable.NewRow();
+                    newRow["OrderDate"]= incomingOrder.OrderDate;
+                    newRow["StoreFront_ID"]= selectedStore.ID;
+                    newRow["Customer_ID"]=incomingCustomer.Id;
+                    newRow["TOTAL"] = incomingOrder.Total;
+                orderTable.Rows.Add(newRow);
+                
+                string insertCmd = $"INSERT INTO Orders (OrderDate, StoreFront_ID, Customer_ID, TOTAL) VALUES ('{incomingOrder.OrderDate}', '{selectedStore.ID}', '{incomingCustomer.Id}', '{incomingOrder.Total}')";
+                
+                dataAdapter.InsertCommand= new SqlCommand(insertCmd, connection);
+                
+                dataAdapter.Update(orderTable);
             }
         }
     }
