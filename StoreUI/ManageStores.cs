@@ -10,8 +10,7 @@ public class store
     
     public void manageStores(List<Storefront> IncomingStores)
     {
-        // List<Storefront> incomingStores = IncomingStores;
-        // AllStores.allStores = IncomingStores;
+
         bool goBack = false;
 
             while(!goBack)
@@ -42,26 +41,23 @@ public class store
                 break;
 
                 case "2":
-                DBREPO dbRepoStores = new DBREPO();
-                List<Storefront> allstores = dbRepoStores.AllStores();
-
-                Console.WriteLine("Select a Store:");
-                for(int i = 0;i < allstores.Count;i++)
-                {
-                    Console.WriteLine($"[{i}] {allstores[i].Name}\n{allstores[i].Address}\n{allstores[i].City}\n{allstores[i].State}");
-                }
-                int selection = Int32.Parse(Console.ReadLine());
-                Storefront selectedStorefront = allstores[selection];
-                
-                ManageInventory.manageInventory(selectedStorefront.Inventories);
+                    DBREPO dbRepoStores = new DBREPO();
+                    List<Storefront> allstores = dbRepoStores.AllStores();
+                    Console.WriteLine("Select a Store:");
+                    for(int i = 0;i < allstores.Count;i++)
+                    {
+                        Console.WriteLine($"[{i}] {allstores[i].Name}\n{allstores[i].Address}\n{allstores[i].City}\n{allstores[i].State}");
+                    }
+                    int selection = Int32.Parse(Console.ReadLine());
+                    ManageInventory.manageInventory(allstores[selection], selection);
                 break;
 
                 case "3":
-                goBack = true;
+                    goBack = true;
                 break;
 
                 default:
-                Console.WriteLine("Invalid input");
+                    Console.WriteLine("Invalid input");
                 break;
                 }
             }

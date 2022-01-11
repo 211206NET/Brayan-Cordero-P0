@@ -11,10 +11,10 @@ public class Storefront
     public List<Inventory> Inventories { get; set; }
     public List<Order> Orders { get; set; }
 
-    public Storefront(){
-        this.Inventories = new List<Inventory>();
-        this.Orders = new List<Order>();
-    }
+    // public Storefront(){
+    //     this.Inventories = new List<Inventory>();
+    //     this.Orders = new List<Order>();
+    // }
 
 
 
