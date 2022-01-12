@@ -81,6 +81,7 @@ public class CustomerCheckout
                 break;
 
                 case "3":
+                bool checkoutSuccessfull = false;
                 if(newOrder.Total == 0) 
                 {
                     Console.WriteLine("Add items to cart");
@@ -92,6 +93,11 @@ public class CustomerCheckout
                     dbRepoOrders.AddToOrders(incomingCustomer,selectedStorefront,newOrder);
                     Console.WriteLine("Your order has been submitted");
                     Console.WriteLine($"Thank you for shopping at {selectedStorefront.Name}");
+                    checkoutSuccessfull = true;
+                    if(checkoutSuccessfull == true)
+                    {
+                        goBack =true;
+                    }
                 }
                 break;
 

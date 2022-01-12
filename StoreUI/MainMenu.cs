@@ -12,27 +12,7 @@ public class MainMenu
     ManagerMenu managerPortal = new ManagerMenu();
     DBREPO dbRepo = new DBREPO();
     List<Customer> customers = dbRepo.AllCustomers();
-
-    //not permanent
-    Customer Manager = new Customer();
-    string managerUsername = "Manager";
-    string managerPassword = "999";
-    Manager.UserName = managerUsername;
-    Manager.Password = managerPassword;
-    AllCustomers.allCustomers.Add(Manager);
-    //only to exit
-
-
-    // Storefront OriginalStore = new Storefront();
-    // string Name = "Munchies";
-    // OriginalStore.Name = Name;
-    // string Address = "626 Rancho Ave";
-    // OriginalStore.Address = Address;
-    // string City = "San Bernanrdino";
-    // OriginalStore.City = City;
-    // string State = "CA";
-    // OriginalStore.State = State;
-    // AllStores.allStores.Add(OriginalStore);
+    List<Staff> staff = dbRepo.AllStaff();
 
     bool exit = false;
 
@@ -49,19 +29,16 @@ public class MainMenu
             case "1": 
                 
                 bool successfullLogin = false;
-                
-                // while (!successfullLogin)
-                // {
                     Console.WriteLine("Enter Username");
                     string? CustomerUsername = Console.ReadLine();
                     Console.WriteLine("Enter Password");
                     string? CustomerPassword = Console.ReadLine();
                     
-                    foreach(Customer existing in customers)
+                    foreach(Customer customer in customers)
                     {
-                        if(CustomerUsername == existing.UserName && CustomerPassword == existing.Password )
+                        if(CustomerUsername == customer.UserName && CustomerPassword == customer.Password )
                         {
-                            customerSignIn.customerMenu(existing);
+                            customerSignIn.customerMenu(customer);
                             successfullLogin = true;
                         }
                     }
@@ -70,9 +47,6 @@ public class MainMenu
                         Console.WriteLine("Invalid Username or Password");
                         Console.WriteLine("Please try again");
                     }
-                
-                // }
-                
                 
             break;
 
@@ -98,28 +72,25 @@ public class MainMenu
             break;
             
             case "4":
-                bool ManagerLogIn = false;
-                // while (!ManagerLogIn)
-                // {
+                bool staffLogin = false;
                     Console.WriteLine("Enter Username");
-                    string? Username = Console.ReadLine();
+                    string? staffUsername = Console.ReadLine();
                     Console.WriteLine("Enter Password");
-                    string? Password = Console.ReadLine();
-                    if(Username == Manager.UserName && Password == Manager.Password )
-                    {
-                        managerPortal.managerMenu();
-                        ManagerLogIn = true;
-                    }
+                    string? staffPassword = Console.ReadLine();
                     
-                    else if(!ManagerLogIn)
+                    foreach(Staff incomingStaff in staff)
+                    {
+                        if(staffUsername == incomingStaff.Name && staffPassword == incomingStaff.Password )
+                        {
+                            managerPortal.managerMenu();
+                            successfullLogin = true;
+                        }
+                    }
+                    if(!staffLogin)
                     {
                         Console.WriteLine("Invalid Username or Password");
                         Console.WriteLine("Please try again");
-                        break;
                     }
-                
-                // }
-                // managerPortal.managerMenu();
             break;
             default:
                 Console.WriteLine("Invalid input, try again");

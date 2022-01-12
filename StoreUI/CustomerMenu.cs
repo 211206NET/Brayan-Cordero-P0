@@ -25,10 +25,11 @@ public class CustomerMenu
                 case "1":
                     
                     List<Storefront> allstores = dbRepoStores.AllStores();
+                    Console.WriteLine("*********STORES********");
                     foreach(Storefront store in allstores)
                     {
                         Console.WriteLine($"{store.Name}\n{store.Address}\n{store.City}\n{store.State}");
-                        Console.WriteLine("************************************");
+                        Console.WriteLine("********************************");
                     }
                 break;
 
@@ -49,12 +50,13 @@ public class CustomerMenu
 
                 case "3":
                 Console.WriteLine("Order History:");
+                Console.WriteLine("*******ORDERS*******");
                 newOrderList = dbRepoStores.AllOrders(incomingCustomer);
                 foreach(Order OrderHistory in newOrderList )
                 {
                     Console.WriteLine($"Order Number: {OrderHistory.OrderNumber} Order Date: {OrderHistory.OrderDate}");
                     Console.WriteLine($"Store: {OrderHistory.StoreName} Total: {OrderHistory.Total}");
-                    Console.WriteLine("******************************");
+                    Console.WriteLine("*********************************");
                 }
                 break;
 

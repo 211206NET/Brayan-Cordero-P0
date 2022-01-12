@@ -14,7 +14,7 @@ public class ManageInventory
         Console.WriteLine("What would you like to do?");
         Console.WriteLine("[1] Make a new product");
         Console.WriteLine("[2] Add a product to Inventory");
-        Console.WriteLine("[3] see All Products");
+        Console.WriteLine("[3] See Inventory");
         Console.WriteLine("[4] Go Back");
         string? input = Console.ReadLine();
 
@@ -36,14 +36,15 @@ public class ManageInventory
 
                 break;
                 case "2":
-                    Console.WriteLine("Select a product to add:");
+                    Console.WriteLine("Select a product to add by ID:");
                     DBREPO dbProducts = new DBREPO();
                     List<Product> allProducts = dbProducts.AllProducts();
                         for (int i = 0; i < allProducts.Count;i++)
                         {
-                            Console.WriteLine($"[{i}] ID: {allProducts[i].ID} Product Name: {allProducts[i].ProductName}");
+                            Console.WriteLine($"ID: [{allProducts[i].ID}]\nProduct Name: {allProducts[i].ProductName}");
                             Console.WriteLine($"Description: {allProducts[i].Description}");
                             Console.WriteLine($"Price: {allProducts[i].Price}");
+                            Console.WriteLine("*******************************");
                         }
                     int selectedProduct = Int32.Parse(Console.ReadLine());
                     Console.WriteLine("Quantity: ");
@@ -61,8 +62,7 @@ public class ManageInventory
                     List<Inventory> storeInventory= dbStoreInventory.StoreInventory(IncomingStore);
                     foreach (Inventory inventory in storeInventory)
                     {
-                        // Console.WriteLine($"{inventory.Quantity}");
-                        Console.WriteLine($"ID: {inventory.Item.ID}");
+                        
                         Console.WriteLine($"Item: {inventory.Item.ProductName} Description: {inventory.Item.Description}");
                         Console.WriteLine($"Price: {inventory.Item.Price} Quantity: {inventory.Quantity}");
                         Console.WriteLine("************************");

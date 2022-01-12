@@ -7,7 +7,7 @@ public class store
     
     ManageInventory ManageInventory = new ManageInventory();
     List<Inventory> StoreInventory = new List<Inventory>();
-    
+
     public void manageStores(List<Storefront> IncomingStores)
     {
 
@@ -24,6 +24,7 @@ public class store
                 switch(managerInput)
                 {
                 case "1":
+                    DBREPO dBREPO = new DBREPO();
                     Storefront newStore = new Storefront();
                     Console.WriteLine("Enter Store Name:");
                     string? newName = Console.ReadLine();
@@ -37,16 +38,18 @@ public class store
                     Console.WriteLine("Enter State:");
                     string? newState = Console.ReadLine();
                     newStore.State = newState;
-                    AllStores.allStores.Add(newStore);
+                    dBREPO.AddNewStore(newStore);
                 break;
 
                 case "2":
                     DBREPO dbRepoStores = new DBREPO();
                     List<Storefront> allstores = dbRepoStores.AllStores();
                     Console.WriteLine("Select a Store:");
+                    Console.WriteLine("*******STORES********");
                     for(int i = 0;i < allstores.Count;i++)
                     {
                         Console.WriteLine($"[{i}] {allstores[i].Name}\n{allstores[i].Address}\n{allstores[i].City}\n{allstores[i].State}");
+                        Console.WriteLine("***********************");
                     }
                     int selection = Int32.Parse(Console.ReadLine());
                     ManageInventory.manageInventory(allstores[selection], selection);
