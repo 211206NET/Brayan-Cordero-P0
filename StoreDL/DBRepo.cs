@@ -40,6 +40,35 @@ public class DBREPO
         return allCustomers;
     }
 
+    //List of Staff
+        public List<Staff> AllStaff()
+    {
+        List<Staff> allStaff = new List<Staff>();
+        using (SqlConnection connection = new SqlConnection(_connectionString))
+        {
+            connection.Open();
+            string queryTxt = "SELECT*FROM Staff";
+            
+            using(SqlCommand cmd = new SqlCommand(queryTxt, connection))
+            {
+                using(SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while(reader.Read())
+                    {
+                        Staff staff = new Staff();
+                        staff.ID = reader.GetInt32(0);
+                        staff.Name = reader.GetString(1);
+                        staff.Password = reader.GetString(2);
+                        staff.Tittle = reader.GetString(3);
+                        allStaff.Add(staff);
+                    }
+                }
+            } 
+            connection.Close();
+        }
+        return allStaff;
+    }
+
     //List of Storefronts
     public List<Storefront> AllStores()
     {
@@ -275,6 +304,35 @@ public class DBREPO
                 dataAdapter.InsertCommand= new SqlCommand(insertCmd, connection);
                 
                 dataAdapter.Update(orderTable);
+            }
+        }
+    }
+
+    //Add new Store to DB
+        public void AddNewStore(Storefront newStore)
+    {
+        DataSet customerSet = new DataSet();
+        string selectCmd = "SELECT*FROM StoreFront";
+        using(SqlConnection connection = new SqlConnection(_connectionString))
+        {
+            using(SqlDataAdapter dataAdapter = new SqlDataAdapter(selectCmd, connection))
+            {
+                
+                dataAdapter.Fill(customerSet, "StoreFront");
+
+                DataTable customerTable = customerSet.Tables["StoreFront"];
+                DataRow newRow = customerTable.NewRow();
+                    newRow["Name"]= newStore.Name;
+                    newRow["Address"]= newStore.Address;
+                    newRow["City"]= newStore.City;
+                    newRow["State"] = newStore.State;
+                customerTable.Rows.Add(newRow);
+                
+                string insertCmd = $"INSERT INTO StoreFront (Name, Address, City, State) VALUES ('{newStore.Name}','{newStore.Address}','{newStore.City}', '{newStore.State}')";
+                
+                dataAdapter.InsertCommand= new SqlCommand(insertCmd, connection);
+                
+                dataAdapter.Update(customerTable);
             }
         }
     }
