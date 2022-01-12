@@ -89,7 +89,6 @@ public class CustomerCheckout
                 if(newOrder.Total > 0)
                 {
                     newOrder.OrderDate = DateOnly.FromDateTime(DateTime.Now).ToString();
-                    Console.WriteLine(newOrder.OrderDate);
                     dbRepoOrders.AddToOrders(incomingCustomer,selectedStorefront,newOrder);
                     Console.WriteLine("Your order has been submitted");
                     Console.WriteLine($"Thank you for shopping at {selectedStorefront.Name}");

@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\StoreModels\StoreModels.csproj" />
+    <ProjectReference Include="..\StoreUI\StoreAppUI.csproj" />
   </ItemGroup>
 
 </Project>
