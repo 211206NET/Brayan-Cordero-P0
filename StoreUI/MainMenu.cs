@@ -12,6 +12,8 @@ public class MainMenu
     ManagerMenu managerPortal = new ManagerMenu();
     DBREPO dbRepo = new DBREPO();
     List<Customer> customers = dbRepo.AllCustomers();
+    // AllCustomers.allCustomers = dbRepo.AllCustomers();
+    //insted of list of customer on the top. 
     List<Staff> staff = dbRepo.AllStaff();
 
     bool exit = false;
