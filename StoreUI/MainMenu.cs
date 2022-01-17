@@ -11,7 +11,7 @@ public class MainMenu
     CustomerMenu customerSignIn = new CustomerMenu();
     ManagerMenu managerPortal = new ManagerMenu();
     DBREPO dbRepo = new DBREPO();
-    List<Customer> customers = dbRepo.AllCustomers();
+    // List<Customer> customers = dbRepo.AllCustomers();
     // AllCustomers.allCustomers = dbRepo.AllCustomers();
     //insted of list of customer on the top. 
     List<Staff> staff = dbRepo.AllStaff();
@@ -29,6 +29,7 @@ public class MainMenu
         switch (UserInput)
         {
             case "1": 
+                List<Customer> customers = dbRepo.AllCustomers();
                 
                 bool successfullLogin = false;
                     Console.WriteLine("Enter Username");
