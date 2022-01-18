@@ -36,6 +36,7 @@ public class DBREPO
                 }
             } 
             connection.Close();
+            
         }
         return allCustomers;
     }
@@ -219,6 +220,7 @@ public class DBREPO
                 dataAdapter.InsertCommand= new SqlCommand(insertCmd, connection);
                 
                 dataAdapter.Update(customerTable);
+                Log.Information("new user added to database {username}", customerToAdd.UserName);
             }
         }
     }
@@ -247,6 +249,7 @@ public class DBREPO
                 dataAdapter.InsertCommand= new SqlCommand(insertCmd, connection);
                 
                 dataAdapter.Update(customerTable);
+                Log.Information("new product added to database {ProductID} {ProductName} {ProductPrice}", productToAdd.ID, productToAdd.ProductName, productToAdd.Price);
             }
         }
     }
@@ -275,6 +278,7 @@ public class DBREPO
                 dataAdapter.InsertCommand= new SqlCommand(insertCmd, connection);
                 
                 dataAdapter.Update(customerTable);
+                Log.Information("new product added to store inventory {ProductID}{Quantity}{StoreFront}", inventoryToAdd.ProductID, inventoryToAdd.Quantity, inventoryToAdd.StoreId);
             }
         }
     }
@@ -304,6 +308,7 @@ public class DBREPO
                 dataAdapter.InsertCommand= new SqlCommand(insertCmd, connection);
                 
                 dataAdapter.Update(orderTable);
+                Log.Information("new order from User {OrderDate}{username}{StoreFront_ID}{TOTAL}", incomingOrder.OrderDate, incomingCustomer.UserName, selectedStore.ID, incomingOrder.Total);
             }
         }
     }
@@ -333,6 +338,7 @@ public class DBREPO
                 dataAdapter.InsertCommand= new SqlCommand(insertCmd, connection);
                 
                 dataAdapter.Update(customerTable);
+                Log.Information("new storefront created {Name}{Address}{City}{State}", newStore.Name, newStore.Address, newStore.City, newStore.State);
             }
         }
     }
